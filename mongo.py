@@ -6,7 +6,7 @@ db = sauna_client['Maksauna']
 SaunaUsers = db["SaunaUsers"]
 
 def insert_user(user : Users):
-	if SaunaUsers.find_one({"tel" : user.tel}):
+	if not SaunaUsers.find({"tel" : user.tel}).__empty:
 		return "User Already Exists"
 	# tmp = user.dict()
 	SaunaUsers.insert_one(user.model_dump())
@@ -16,7 +16,7 @@ def find_user(tel : telReq):
     return SaunaUsers.find_one({"tel" : tel.tel})
 	
 def delete_user(tel : telReq):
-	if SaunaUsers.find_one({"tel" : tel.tel}).__sizeof__ == 0:
+	if SaunaUsers.find({"tel" : tel.tel}).__empty:
 		return "User Not Founds"
 	SaunaUsers.delete_one({"tel" : tel.tel})
 	return "deleted"
