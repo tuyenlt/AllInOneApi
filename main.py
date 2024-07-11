@@ -25,25 +25,41 @@ def home():
 @app.post("/user/warranty_check")
 def getWarrantyDate(req : telReq) -> Users:
     try:
-       return find_user(req)
+        res = find_user(req)
+        if res == "User Not Found":
+           raise Exception("not found")
+        return res
     except Exception as e:
         print(e)
+        if e.args[0] == "not found":
+            raise HTTPException(status_code=400,detail="user not found")
         raise HTTPException(status_code=500,detail="Database error")
     
 @app.post("/user/add")
 def addUser(req : Users):
     try:
-       return insert_user(req)
+       res = insert_user(req)
+       if res == "User Already Exists":
+           raise Exception("not found")
+       return res
+       
     except Exception as e:
         print(e)
+        if e.args[0] == "not found":
+            raise HTTPException(status_code=400,detail="user already exits")
         raise HTTPException(status_code=500,detail="Database error")
    
 @app.delete("/user/delete")
 def delUser(req : telReq):
     try:
-       delete_user(req)
+       res = delete_user(req)
+       if res == "User Not Found":
+           raise Exception("not found")
+       return res
     except Exception as e:
         print(e)
+        if e.args[0] == "not found":
+            raise HTTPException(status_code=400,detail="user not found")
         raise HTTPException(status_code=500,detail="Database error")   
     
 @app.get("/user/viewall")

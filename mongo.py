@@ -22,7 +22,9 @@ def insert_user(user : Users):
 	return "Insert User Success"
 
 def find_user(tel : telReq):
-    return SaunaUsers.find_one({"tel" : tel.tel})
+	if not is_exits(SaunaUsers.find({"tel" : tel.tel})):
+		return "User Not Found"
+	return SaunaUsers.find_one({"tel" : tel.tel})
 	
 def delete_user(tel : telReq):
 	if not is_exits(SaunaUsers.find({"tel" : tel.tel})):
