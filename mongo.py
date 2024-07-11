@@ -5,8 +5,17 @@ sauna_client = pymongo.MongoClient("mongodb+srv://maksauna8668:tuyenlu111@maksau
 db = sauna_client['Maksauna']
 SaunaUsers = db["SaunaUsers"]
 
+def is_exits(curr):
+	cnt = 0
+	for c in curr:
+		cnt = cnt + 1
+	if cnt == 0:
+		return False
+	else:
+		return True
+
 def insert_user(user : Users):
-	if not SaunaUsers.find({"tel" : user.tel}).__empty:
+	if is_exits(SaunaUsers.find({"tel" : user.tel})):
 		return "User Already Exists"
 	# tmp = user.dict()
 	SaunaUsers.insert_one(user.model_dump())
@@ -16,8 +25,8 @@ def find_user(tel : telReq):
     return SaunaUsers.find_one({"tel" : tel.tel})
 	
 def delete_user(tel : telReq):
-	if SaunaUsers.find({"tel" : tel.tel}).__empty:
-		return "User Not Founds"
+	if not is_exits(SaunaUsers.find({"tel" : tel.tel})):
+		return "User Not Found"
 	SaunaUsers.delete_one({"tel" : tel.tel})
 	return "deleted"
 
