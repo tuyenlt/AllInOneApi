@@ -39,14 +39,14 @@ def getWarrantyDate(req : telReq) -> Users:
 def addUser(req : Users):
     try:
        res = insert_user(req)
-       if res == "User Already Exists":
-           raise Exception("not found")
+       if res == "Update":
+           raise Exception("update")
        return res
        
     except Exception as e:
         print(e)
-        if e.args[0] == "not found":
-            raise HTTPException(status_code=400,detail="user already exits")
+        if e.args[0] == "update":
+            raise HTTPException(status_code=201,detail="user updated")
         raise HTTPException(status_code=500,detail="Database error")
    
 @app.delete("/user/delete")

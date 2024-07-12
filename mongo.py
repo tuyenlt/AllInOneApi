@@ -16,10 +16,19 @@ def is_exits(curr):
 
 def insert_user(user : Users):
 	if is_exits(SaunaUsers.find({"tel" : user.tel})):
-		return "User Already Exists"
+		query = {"tel" : user.tel}
+		newvalues = { "$set": { 
+				"tel" : user.tel,
+				"name" : user.name,
+      			"address": user.address,
+				"done_day" : user.done_day,
+				"warranty_time" : user.warranty_time
+         }}
+		SaunaUsers.update_one(query, newvalues)
+		return "Update"
 	# tmp = user.dict()
 	SaunaUsers.insert_one(user.model_dump())
-	return "Insert User Success"
+	return "Insert"
 
 def find_user(tel : telReq):
 	if not is_exits(SaunaUsers.find({"tel" : tel.tel})):
