@@ -1,0 +1,14 @@
+## User
+    - id : string
+    - name : string
+    - avartar : img path
+    - pass : string
+    - friends list : [
+        friend_id : string
+    ]
+
+    - userdata : {
+        - todoList 
+        - default news category
+        - post : post id
+    }
