@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from schema import *
 import pymongo
-
+import pydantic
 
 client = pymongo.MongoClient("mongodb+srv://keplerlu:tuyenlu111@allinoneusers.qtic57s.mongodb.net/?retryWrites=true&w=majority&appName=AllInOneUsers")
 db = client.get_database("AllInOneUsers")
