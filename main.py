@@ -76,7 +76,7 @@ def createPost(request : Post):
         print(e)
         
         
-@app.get("/get-post")
+@app.post("/get-post")
 def getPost(req : getPostRequest):
     try:
         post = postsCollection.find_one({"id" : req.id})
